@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "horse003\\event\\": ""
+            "horse003\\event\\": "src/"
         }
     }
 }

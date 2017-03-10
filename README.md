@@ -31,7 +31,7 @@ Once the extension is installed, simply use it in your code by  :
 <?= \horse003\event\AutoloadExample::widget(); ?>
 ```
 
-#事件举例
+# 事件举例
 ##1.猫来了，老鼠就跑了   trigger()  on()  
 ```php
     public function actionAnimal(){
@@ -45,7 +45,7 @@ Once the extension is installed, simply use it in your code by  :
  miao maio miao  
  mourse is runing  
 ```
-##2.加入事件传参数 
+## 2.加入事件传参数 
 ```php
 #vendor/horse003/yii2-event-demo/src/Cat.php  
     public function shout() {
@@ -71,7 +71,7 @@ miao maio miao
 hello my is event  
 mourse is runing  
 ```
-##3.加入dog角色  
+## 3.加入dog角色  
 >猫叫，老鼠跑了，小跑在看
 ```php
     public function actionAnimal(){
@@ -91,7 +91,7 @@ mourse is runing
     
 ```
 
-##4.取消狗在看的动作
+## 4.取消狗在看的动作
 ```php
     public function actionAnimal(){
         $cat = new Cat();
@@ -109,7 +109,7 @@ mourse is runing
     mourse is runing
 ```
 
-##5.实例化多一只猫对象，却只有上面的一只老鼠在跑(一个事件在跑)
+## 5.实例化多一只猫对象，却只有上面的一只老鼠在跑(一个事件在跑)
 ```php
     public function actionAnimal(){
         $cat = new Cat();
@@ -129,7 +129,7 @@ mourse is runing
  miao maio miao   
 ```
 
-##5.1 对5的改进，实例化多个猫对象，能否对应的老鼠都在跑呢？
+## 5.1 对5的改进，实例化多个猫对象，能否对应的老鼠都在跑呢？
 ```php
     public function actionAnimal(){
         $cat = new Cat();
@@ -151,7 +151,7 @@ hello my is event
 mourse is runing
 ```
 
-##5.2 加入匿名函数，运行后触发
+## 5.2 加入匿名函数，运行后触发
 ```php
     public function actionAnimal() {
         $cat = new Cat();
@@ -173,3 +173,62 @@ mourse is runing
  miao event has triggered   
     
 ```    
+
+## 6 根据系统   $this->trigger(self::EVENT_AFTER_REQUEST),action输出后再输出
+```php
+(new yii\web\Application($config))->run();
+
+ public function run()
+    {
+        try {
+
+            $this->state = self::STATE_BEFORE_REQUEST;
+            $this->trigger(self::EVENT_BEFORE_REQUEST);
+
+            $this->state = self::STATE_HANDLING_REQUEST;
+            $response = $this->handleRequest($this->getRequest());
+
+            $this->state = self::STATE_AFTER_REQUEST;
+            $this->trigger(self::EVENT_AFTER_REQUEST);
+
+            $this->state = self::STATE_SENDING_RESPONSE;
+            $response->send();
+
+            $this->state = self::STATE_END;
+
+            return $response->exitStatus;
+
+        } catch (ExitException $e) {
+
+            $this->end($e->statusCode, isset($response) ? $response : null);
+            return $e->statusCode;
+
+        }
+    }
+```  
+    
+``` php
+     public function actionAnimal() {
+ 
+         \Yii::$app->on(\yii\base\Application::EVENT_AFTER_REQUEST,function (){
+             echo 'event after request';
+         });
+ 
+         $cat = new Cat();
+         $cat2 = new Cat();
+         $mouse = new Mourse();
+         $dog = new Dog();
+ 
+         Event::on(Cat::className(), 'miao', function(){
+             echo 'miao event has triggered<br/>';
+         });
+         $cat->shout();
+         $cat2->shout();
+     }
+  //输出          
+  miao maio miao
+  miao event has triggered
+  miao maio miao
+  miao event has triggered
+  event after request      
+``` 

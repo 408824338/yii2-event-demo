@@ -12,7 +12,5 @@ namespace horse003\event;
 class Dog {
     public function look() {
         echo 'i am looking!<br />';
-
     }
-
 }

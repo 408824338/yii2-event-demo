@@ -110,6 +110,15 @@ mourse is runing
 ## 3.加入dog角色  
 猫叫，老鼠跑了，小跑在看
 
+###dog
+vendor/horse003/yii2-event-demo/src/Dog.php
+```php
+class Dog {
+    public function look() {
+        echo 'i am looking!<br />';
+    }
+}
+```
 ###控制器
 backend/controllers/DemoEventController.php 
 ```php
@@ -156,13 +165,13 @@ backend/controllers/DemoEventController.php
 ```php
     public function actionAnimal(){
         $cat = new Cat();
-        $cat2 = new Cat();
+        $cat2 = new Cat();  //实例化多一只猫
         $mouse = new Mourse();
         $dog = new Dog();
         $cat->on('miao',[$mouse,'run']);
 
         $cat->shout();
-        $cat2->shout();
+        $cat2->shout();  //第二只猫执行，但没有执行事件
 
     }
 ```
@@ -174,7 +183,7 @@ backend/controllers/DemoEventController.php
  miao maio miao   
 ```
 
-## 5.1 对5的改进，实例化多个猫对象，能否对应的老鼠都在跑呢？
+## 5.1 对5的改进，实例化多个猫对象，能否对应的事件，即所有的老鼠都在跑呢？
 ```php
     public function actionAnimal(){
         $cat = new Cat();

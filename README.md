@@ -207,7 +207,7 @@ hello my is event
 mourse is runing
 ```
 
-## 5.2 加入匿名函数，运行后触发
+## 5.2 加入匿名函数，运行后触发,注意这个时候，里边的Event事件即失效了
 ```php
     public function actionAnimal() {
         $cat = new Cat();

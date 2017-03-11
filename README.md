@@ -32,7 +32,12 @@ Once the extension is installed, simply use it in your code by  :
 ```
 
 # 事件举例
+
+##访问地址 
+http://ysk.dev/admin/demo-event/animal
+
 ##1.猫来了，老鼠就跑了   trigger()  on()  
+backend/controllers/DemoEventController.php  
 ```php
     public function actionAnimal(){
         $cat = new Cat();

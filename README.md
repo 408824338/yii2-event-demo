@@ -37,6 +37,26 @@ Once the extension is installed, simply use it in your code by  :
 http://ysk.dev/admin/demo-event/animal
 
 ##1.猫来了，老鼠就跑了   trigger()  on()  
+
+###猫 
+vendor/horse003/yii2-event-demo/src/Cat.php  
+```php
+    public function shout() {
+        echo 'miao maio miao<br />';
+        $this->trigger('miao';
+    }
+```
+###老鼠
+vendor/horse003/yii2-event-demo/src/Mourse.php  
+```php
+ class Mourse { 
+     //3.$e 接收事件
+     public function run(){
+         echo 'mourse is runing<br />';
+     }
+ }
+```
+###控制器
 backend/controllers/DemoEventController.php  
 ```php
     public function actionAnimal(){
@@ -44,15 +64,20 @@ backend/controllers/DemoEventController.php
         $mouse = new Mourse();
         $cat->on('miao',[$mouse,'run']);
         $cat->shout();
-
     }
- //输出
+```
+###输出
+```php
  miao maio miao  
  mourse is runing  
 ```
+
 ## 2.加入事件传参数 
+
+###猫 
+vendor/horse003/yii2-event-demo/src/Cat.php  
 ```php
-#vendor/horse003/yii2-event-demo/src/Cat.php  
+
     public function shout() {
         echo 'miao maio miao<br />';
 
@@ -62,7 +87,11 @@ backend/controllers/DemoEventController.php
         //2.发送事件
         $this->trigger('miao', $me);
     }
-#vendor/horse003/yii2-event-demo/src/Mourse.php
+```
+###老鼠
+vendor/horse003/yii2-event-demo/src/Mourse.php  
+```php
+
  class Mourse {
     
      //3.$e 接收事件
@@ -71,13 +100,18 @@ backend/controllers/DemoEventController.php
          echo 'mourse is runing<br />';
      }
  }
-     //输出
+```
+###输出
+```php
 miao maio miao  
 hello my is event  
 mourse is runing  
 ```
 ## 3.加入dog角色  
->猫叫，老鼠跑了，小跑在看
+猫叫，老鼠跑了，小跑在看
+
+###控制器
+backend/controllers/DemoEventController.php 
 ```php
     public function actionAnimal(){
         $cat = new Cat();
@@ -88,7 +122,9 @@ mourse is runing
         $cat->shout();
 
     }
-//输出
+```
+###输出
+```php
     miao maio miao
     hello my is event
     mourse is runing
@@ -108,7 +144,9 @@ mourse is runing
         $cat->shout();
 
     }
-//输出
+```
+###输出
+```php
     miao maio miao
     hello my is event
     mourse is runing
@@ -127,7 +165,9 @@ mourse is runing
         $cat2->shout();
 
     }
-//输出    
+```
+###输出  
+```php 
  miao maio miao
  hello my is event
  mourse is runing
@@ -147,7 +187,9 @@ mourse is runing
         $cat2->shout();
 
     }
-//输出   
+```
+###输出   
+```php 
 miao maio miao
 hello my is event
 mourse is runing
@@ -171,7 +213,9 @@ mourse is runing
         $cat2->shout();
 
     }
- //输出   
+```
+###输出   
+```php
  miao maio miao
  miao event has triggered
  miao maio miao
@@ -180,6 +224,8 @@ mourse is runing
 ```    
 
 ## 6 根据系统   $this->trigger(self::EVENT_AFTER_REQUEST),action输出后再输出
+###系统
+vendor/yiisoft/yii2/base/Application.php 
 ```php
 (new yii\web\Application($config))->run();
 
@@ -211,7 +257,8 @@ mourse is runing
         }
     }
 ```  
-    
+###控制器
+backend/controllers/DemoEventController.php     
 ``` php
      public function actionAnimal() {
  
@@ -230,7 +277,9 @@ mourse is runing
          $cat->shout();
          $cat2->shout();
      }
-  //输出          
+```
+###输出  
+``` php       
   miao maio miao
   miao event has triggered
   miao maio miao

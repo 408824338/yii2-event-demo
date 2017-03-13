@@ -8,8 +8,10 @@
 
 namespace horse003\event;
 
+use yii\base\Component;
 
-class Dog {
+class Dog extends Component {
+
     public function look() {
         echo 'i am looking!<br />';
     }
